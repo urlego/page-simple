@@ -1,18 +1,21 @@
 <template>
     <div>
         <form class="form-horizontal">
+            <div class="page-header">
+                <h4 class="col-offset-1 text-muted">被转接信息</h4>
+            </div>
             <div class="form-group form-group-sm">
-                <label class="control-label col-sm-3">
+                <label class="control-label col-sm-3 form-control-static">
                     被转接应用类型
                 </label>
 
                 <div class="col-sm-6 form-control-static">
-                    {{getAppTypeName(form.sourceAppType)}}
+                    {{toAppTypeName(form.sourceAppType)}}
                 </div>
             </div>
             <div class="form-group form-group-sm">
                 <label class="control-label col-sm-3">
-                    <i style="color:red;">*</i> 被转接应用缩写
+                    <i class="red">*</i> 被转接应用缩写
                 </label>
 
                 <div class="col-sm-3">
@@ -33,7 +36,7 @@
             </div>
             <div class="form-group form-group-sm">
                 <label class="control-label col-sm-3">
-                    <i style="color:red;">*</i> 被转接应用名称
+                    <i class="red">*</i> 被转接应用名称
                 </label>
                 <div class="col-sm-3">
                     <input type="text"
@@ -49,7 +52,7 @@
             </div>
             <div class="form-group form-group-sm">
                 <label class="control-label col-sm-3">
-                    <i style="color:red;">*</i> 被转接应用包名
+                    <i class="red">*</i> 被转接应用包名
                 </label>
                 <div class="col-sm-3">
                     <input type="text"
@@ -63,9 +66,12 @@
                     请填写
                 </div>
             </div>
+            <div class="page-header">
+                <h4 class="col-offset-1 text-muted">目标应用信息</h4>
+            </div>
             <div class="form-group form-group-sm">
                 <label class="control-label col-sm-3">
-                    <i style="color:red;">*</i> 目标应用ID
+                    <i class="red">*</i> 目标应用ID
                 </label>
                 <div class="col-sm-3">
                     <input type="text"
@@ -137,18 +143,16 @@
                 form: {}
             };
         },
-        computed: {
-            operateType(){
-                return this.$store.state.operateType;
-            }
-        },
         created(){
             this.$set(this, 'form', this.$store.state.targetInfo);
         },
         methods: {
-            getAppTypeName(key){
+            toAppTypeName(key){
                 return Const.getVal('appType', key);
             },
+            /**
+             * 同步form表单内容到store,便于在modal中保存
+             */
             syncForm(){
                 this.$store.commit('syncTargetInfo', JSON.parse(JSON.stringify(this.form)));
             }

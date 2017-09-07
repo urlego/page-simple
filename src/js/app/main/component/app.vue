@@ -55,7 +55,6 @@
         },
         data(){
             return {
-                os: '',
                 form:{
                     sourceAppName: '',
                     sourceAppCode: '',
@@ -94,10 +93,15 @@
             }
         },
         created(){
-            this.os = Const.getKey('os', this.$route.params.os);
             this.getData();
         },
         computed: {
+            os(){
+                return this.$store.state.os;
+            },
+            /**
+             * 搜索时的请求参数对象
+             */
             searchData(){
                 return Object.assign({}, this.form, {
                     os: this.os,
@@ -107,6 +111,9 @@
             }
         },
         methods: {
+            /**
+             * 请求数据
+             */
             getData(){
                 this.list.loading = true;
                 Promise.resolve($.ajax({
@@ -123,10 +130,13 @@
                     }else{
                         return Promise.resolve(res.message);
                     }
-                }).catch(err=>{
-                    let msg = '请求失败';
-                    if(typeof err === 'string'){
-                        msg = err;
+                }).catch(xhr=>{
+                    let msg = '获取数据失败';
+
+                    if (xhr.status === 401) {
+                        msg = '您没有权限';
+                    } else if (typeof xhr === 'string') {
+                        msg = xhr;
                     }
                     this.list.status = false;
                     this.list.msg = msg;
@@ -135,14 +145,23 @@
                     this.$refs.search.stopSearching();
                 })
             },
+            /**
+             * 搜索
+             */
             search(form){
                 Object.assign(this.form, form);
                 this.getData();
             },
+            /**
+             * 修改当前页码后进行的操作
+             */
             changePage(page){
                 this.pageInfo.pageIndex = page;
                 this.getData();
             },
+            /**
+             * 添加
+             */
             add(){
                 this.$store.dispatch('add');
                 this.$router.push({path: 'modal/update', append: true});
@@ -150,8 +169,6 @@
         },
         watch: {
             '$route.params.os': function(os) {
-                this.os = Const.getKey('os', os);
-                this.$store.dispatch('switchOs', Const.getKey('os', os));
                 this.getData();
             }
         }

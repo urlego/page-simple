@@ -5,9 +5,12 @@ import Vue from 'vue';
 import router from './router';
 import VueRouter from 'vue-router';
 Vue.use(VueRouter);
+import store from './store';
+import Const from 'common/const';
 new Vue({
     el: '#app',
     router,
+    store,
     data: {
         os: ''
     },
@@ -22,6 +25,7 @@ new Vue({
     watch: {
         '$route.params.os': function(os) {
             this.os = os;
+            this.$store.dispatch('switchOs', Const.getKey('os', os));
         }
     }
 });

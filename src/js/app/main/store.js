@@ -15,21 +15,20 @@ var targetInfoTemplate = {
 
 export default new Vuex.Store({
     state: {
-        operateType: '',
-        targetId: '',
-        targetInfo: JSON.parse(JSON.stringify(targetInfoTemplate)),
-        os: Const.getKey('os', 'android')
+        operateType: '', // 操作类型
+        targetId: '', // 操作目标Id
+        targetInfo: JSON.parse(JSON.stringify(targetInfoTemplate)), // 操作目标的信息
+        os: Const.getKey('os', 'android') // 操作系统
     },
     mutations: {
-        update(state, id){
+        update(state){
             state.operateType = 'update';
-            state.targetId = id;
         },
         add(state){
             state.operateType = 'add';
         },
         syncTargetId(state, id){
-            Object.assign(state.targetId, id);
+            state.targetId = id;
         },
         syncTargetInfo(state, info){
             Object.assign(state.targetInfo, info);
@@ -43,14 +42,12 @@ export default new Vuex.Store({
     },
     actions: {
         update(context, id) {
-            context.commit('update', id);
+            context.commit('update');
+            context.commit('syncTargetId', id);
         },
         add(context, id) {
             context.commit('add', id);
             context.commit('resetTargetInfo');
-        },
-        syncTargetId(context, id){
-            context.commit('syncTargetId', id);
         },
         syncTargetInfo(context, info){
             context.commit('syncTargetInfo', info);

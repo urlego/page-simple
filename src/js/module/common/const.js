@@ -26,8 +26,6 @@
  * 2. getVal 获取一个常量的指定描述，如获取auditStatus中key为1的val值
  * 3. getKey 获取一个常量的指定key，如获取auditStatus中val为'审核通过'的key
  */
-import utility from 'ct-utility';
-import Interface from 'common/interface';
 var constConfig = {
     //请保证第一项为默认项，默认项为除去定义常量后的默认选项，一般为'不限''全部''请选择'
     os: [{
@@ -63,57 +61,6 @@ var constConfig = {
         key: 3,
         val: '网页'
     }],
-    /**
-     * 该方法为动态常量的定义
-     * 该方法返回一个promise，用于通过接口获取后端常量，开发者需要使用该常量时需要调用该方法，以便拿到请求数据的promise实例，来进行下一步操作
-     *
-     * 缓存：
-     * 该方法通过将数据加入到如portraitType.data中进行数据缓存，二次获取直接读取缓存中的内容。
-     * 后续提到的缓存，是指portraitType.data
-     *
-     * 方法的调用时机：
-     * 在用到portraitType常量时，执行例如constConfig.portraitType().then(function(){this.portraitTypeList=constConfig.getData('portraitType')})。
-     * 其中的this.portraitTypeList为vue对象中的portraitType属性.
-     */
-    portraitType(){
-        const that = constConfig;
-        let p;
-
-        //检测缓存中数据是否有length>0的数据，如果有，则直接读取缓存
-        if (Array.isArray(that.portraitType.data) && that.portraitType.data.length > 0) {
-            p = Promise.resolve(that.portraitType.data);
-        } else {
-            //当缓存没有数据时，发起请求
-            p = Promise.resolve($.ajax({
-                url: Interface.common.getPortraitTypeList,
-                cache: false
-            })).then(res=> {
-                //请按照自己的接口处理数据并存入到缓存中，遵循key val的形式
-                res = utility.objTransfer.lowerKey(res);
-
-                if (res.statusCode === 0) {
-                    that.portraitType.data = [{
-                        key: 0,
-                        val: '不限'
-                    }];
-                    res.data.map(item=> {
-                        that.portraitType.data.push({
-                            key: item.key,
-                            val: item.val
-                        });
-                    });
-                } else {
-                    //warning!请给出默认值
-                    that.portraitType.data = [];
-                }
-            }).catch(()=> {
-                //warning!请给出默认值
-                that.portraitType.data = [];
-            });
-        }
-        //返回一个promise实例，用于在模块外部请求portraitType
-        return p;
-    },
     /**
      * 获取某个常量的数据
      * @param col String 需要获取的常量，如'auditStatus'

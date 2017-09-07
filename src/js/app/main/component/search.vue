@@ -42,6 +42,10 @@
     </div>
 </template>
 <script type="text/ecmascript-6">
+    /**
+     * 组件事件列表
+     * search 事件 搜索动作被触发是触发该事件（点击搜索按钮或敲回车）
+     */
     import Const from 'common/const';
     export default {
         name: 'search',
@@ -57,10 +61,16 @@
             };
         },
         methods: {
-            stopSearching: function(){
+            /**
+             * 停止searching状态，主要用于外部调用
+             */
+            stopSearching(){
                 this.searching = false;
             },
-            goSearch: function(){
+            /**
+             * 发起搜索操作
+             */
+            goSearch(){
                 this.searching = true;
                 this.$emit('search', JSON.parse(JSON.stringify(this.form)));
             }
