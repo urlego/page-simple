@@ -2,9 +2,9 @@
  * @author rubyisapm
  */
 import Vue from 'vue';
-import router from './router';
 import VueRouter from 'vue-router';
 Vue.use(VueRouter);
+import router from './router';
 import store from './store';
 import Const from 'common/const';
 new Vue({

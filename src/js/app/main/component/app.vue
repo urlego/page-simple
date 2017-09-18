@@ -29,7 +29,7 @@
         <router-view @success="getData"></router-view>
     </div>
 </template>
-<script type="es6">
+<script type="text/ecmascript-6">
     import Const from 'common/const';
     import List from 'ct-adc-list';
     import Page from 'ct-adc-page';
@@ -39,12 +39,8 @@
     import Modal from './modal';
     import Buttons from './buttons';
     import Vue from 'vue';
-    import router from '../router';
-    import store from '../store';
     Vue.component('appSwitchListButtons', Buttons);
     export default{
-        router,
-        store,
         components: {
             Search,
             List,
@@ -55,7 +51,7 @@
         },
         data(){
             return {
-                form:{
+                form: {
                     sourceAppName: '',
                     sourceAppCode: '',
                     disable: Const.getKey('switchStatus', '不限')
@@ -72,13 +68,13 @@
                     },
                     source: {
                         switchStatus: Const.getData('switchStatus', false),
-                        appType: Const.getData('appType',false)
+                        appType: Const.getData('appType', false)
                     },
                     className: {
                         switchStatus(val){
-                            if(val === '已启用'){
+                            if (val === '已启用'){
                                 return 'text-success';
-                            }else if(val === '已禁用'){
+                            } else if (val === '已禁用'){
                                 return 'text-danger';
                             }
                             return '';
@@ -90,7 +86,7 @@
                     count: 0,
                     pageSize: 10
                 }
-            }
+            };
         },
         created(){
             this.getData();
@@ -107,7 +103,7 @@
                     os: this.os,
                     pageIndex: this.pageInfo.pageIndex,
                     pageSize: this.pageInfo.pageSize
-                })
+                });
             }
         },
         methods: {
@@ -123,11 +119,11 @@
                     data: this.searchData
                 })).then(res=>{
                     res = utility.objTransfer.lowerKey(res);
-                    if(res.status){
+                    if (res.status){
                         this.list.data = res.data.rows;
                         this.pageInfo.count = res.data.totalCount;
                         this.pageInfo.pageIndex = res.data.actualPageIndex;
-                    }else{
+                    } else {
                         return Promise.resolve(res.message);
                     }
                 }).catch(xhr=>{
@@ -143,7 +139,7 @@
                 }).then(()=>{
                     this.list.loading = false;
                     this.$refs.search.stopSearching();
-                })
+                });
             },
             /**
              * 搜索
@@ -168,9 +164,9 @@
             }
         },
         watch: {
-            '$route.params.os': function(os) {
+            '$route.params.os': function() {
                 this.getData();
             }
         }
-    }
+    };
 </script>

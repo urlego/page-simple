@@ -41,13 +41,10 @@
      * 组件事件列表
      * success 保存成功后触发该事件
      */
-    import router from '../router';
-    import store from '../store';
     import Interface from 'common/interface';
     import utility from 'ct-utility';
     import Const from 'common/const';
     export default{
-        store,
         data(){
             return {
                 loading: false, // 加载状态
@@ -78,7 +75,7 @@
             },
             hide(){
                 $(this.$refs.modal).modal('hide');
-                router.go(-1);
+                this.$router.go(-1);
             },
             /**
              * 获取
