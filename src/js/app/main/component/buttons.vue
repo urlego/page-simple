@@ -16,14 +16,11 @@
      * 组件事件列表
      * operate-success 按钮操作成功后触发该事件
      */
-    import router from '../router.js';
-    import store from '../store.js';
     import Interface from 'common/interface';
     import utility from 'ct-utility';
     import Const from 'common/const';
     export default{
         name: 'buttons',
-        store,
         props: {
             prop: {
                 // 对应的源数据中的字段名
@@ -64,7 +61,7 @@
              */
             goEdit(){
                 this.$store.dispatch('update', this.item.id);
-                router.push({path: 'modal/update', append: true});
+                this.$router.push({path: 'modal/update', append: true});
             },
             /**
              * 切换禁用/启用状态
