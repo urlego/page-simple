@@ -146,6 +146,7 @@
              */
             search(form){
                 Object.assign(this.form, form);
+                this.pageInfo.pageIndex = 1;
                 this.getData();
             },
             /**

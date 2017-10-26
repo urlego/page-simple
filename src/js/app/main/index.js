@@ -21,6 +21,7 @@ new Vue({
     },
     created(){
         this.os = this.$route.params.os;
+        this.$store.dispatch('switchOs', Const.getKey('os', this.os));
     },
     watch: {
         '$route.params.os': function(os) {
