@@ -123,6 +123,8 @@
                         this.list.data = res.data.rows;
                         this.pageInfo.count = res.data.totalCount;
                         this.pageInfo.pageIndex = res.data.actualPageIndex;
+                        this.list.status = true;
+                        this.list.msg = '';
                     } else {
                         return Promise.reject(res.message);
                     }
@@ -147,6 +149,7 @@
             search(form){
                 Object.assign(this.form, form);
                 this.pageInfo.pageIndex = 1;
+                this.pageInfo.count = 0;
                 this.getData();
             },
             /**
