@@ -2,6 +2,8 @@
 
 ### 1.0.4
 
+*2017-11-30*
+
 - 修复 抛出异常时误用了Promise.resolve，改为Promise.reject
 
 ### 1.0.3
