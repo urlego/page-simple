@@ -124,7 +124,7 @@
                         this.pageInfo.count = res.data.totalCount;
                         this.pageInfo.pageIndex = res.data.actualPageIndex;
                     } else {
-                        return Promise.resolve(res.message);
+                        return Promise.reject(res.message);
                     }
                 }).catch(xhr=>{
                     let msg = '获取数据失败';
