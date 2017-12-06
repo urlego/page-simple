@@ -24,7 +24,7 @@
         </adc-table>
         <page form
               :curr-page="pageInfo.pageIndex"
-              :page-length="pageInfo.pageSize"
+              :page-leng="pageInfo.pageSize"
               :total-num="pageInfo.count" @change-page="changePage"></page>
         <router-view @success="getData"></router-view>
     </div>
@@ -51,11 +51,7 @@
         },
         data(){
             return {
-                form: {
-                    sourceAppName: '',
-                    sourceAppCode: '',
-                    disable: Const.getKey('switchStatus', '不限')
-                },
+                form: {},
                 list: {
                     data: [],
                     status: true,
@@ -145,8 +141,9 @@
              * 搜索
              */
             search(form){
-                Object.assign(this.form, form);
+                this.form = form;
                 this.pageInfo.pageIndex = 1;
+                this.pageInfo.count = 0;
                 this.getData();
             },
             /**
